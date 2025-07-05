@@ -27,35 +27,42 @@ function Search() {
   }, [searchHistory]);
 
   const fetchPokemon = async (term = searchTerm) => {
-    const searchTermLower = term.toLowerCase();
-    if (!searchTermLower) return;
-    setPokemon({ img: null, data: null, error: "", loading: true });
+  const searchTermLower = term.trim().toLowerCase();
 
-    try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTermLower}`);
-      if (!res.ok) throw new Error("Pokémon not found");
+  // Reject numbers or empty strings
+  if (!searchTermLower || !isNaN(searchTermLower)) {
+    setPokemon({ img: null, data: null, error: "Please enter a valid Pokémon name!", loading: false });
+    return;
+  }
 
-      const data = await res.json();
+  setPokemon({ img: null, data: null, error: "Wait for a Minute", loading: true });
 
-      setSearchHistory((prev) => {
-        const updated = [searchTermLower, ...prev.filter((item) => item !== searchTermLower)];
-        return updated.slice(0, 10);
-      });
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTermLower}`);
+    if (!res.ok) throw new Error("Pokémon not found");
 
-      setPokemon({
-        img: data.sprites.front_default,
-        data: {
-          name: data.name,
-          types: data.types.map((t) => t.type.name),
-          abilities: data.abilities.map((a) => a.ability.name),
-        },
-        error: "",
-        loading: false,
-      });
-    } catch {
-      setPokemon({ img: null, data: null, error: "Pokémon not found!", loading: false });
-    }
-  };
+    const data = await res.json();
+
+    setSearchHistory((prev) => {
+      const updated = [searchTermLower, ...prev.filter((item) => item !== searchTermLower)];
+      return updated.slice(0, 10);
+    });
+
+    setPokemon({
+      img: data.sprites.front_default,
+      data: {
+        name: data.name,
+        types: data.types.map((t) => t.type.name),
+        abilities: data.abilities.map((a) => a.ability.name),
+      },
+      error: "",
+      loading: false,
+    });
+  } catch {
+    setPokemon({ img: null, data: null, error: "Pokémon not found!", loading: false });
+  }
+};
+
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") fetchPokemon();
