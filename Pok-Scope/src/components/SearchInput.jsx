@@ -1,10 +1,9 @@
-import "./SearchInput.css"
+import "./SearchInput.css";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 import TypeColors from "../utils/typeColors";
 
 function SearchInput({ searchTerm, onChange, onKeyDown, onSearchClick, onClearClick, hasError }) {
   return (
-    {/* Search Input */},
     <div className="flex items-center space-x-2">
       <input
         type="text"
@@ -13,9 +12,9 @@ function SearchInput({ searchTerm, onChange, onKeyDown, onSearchClick, onClearCl
         onKeyDown={onKeyDown}
         placeholder="Search Pokémon..."
         className={`flex-1 px-4 py-2 border ${
-          hasError ? `${TypeBackgrounds.borders.borderRed}` : `${TypeBackgrounds.borders.borderGray}`
+          hasError ? TypeBackgrounds.borders.borderRed : TypeBackgrounds.borders.borderGray
         } rounded ${TypeBackgrounds.focuses.focusOutlineNone} ${TypeBackgrounds.focuses.focusRing2} ${
-          hasError ? `${TypeBackgrounds.focuses.focusRingRed}` : `${TypeBackgrounds.focuses.focusRingBlue}`
+          hasError ? TypeBackgrounds.focuses.focusRingRed : TypeBackgrounds.focuses.focusRingBlue
         }`}
       />
       <button
