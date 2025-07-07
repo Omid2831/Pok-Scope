@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./PokScope.css";
 import SearchInput from "./components/SearchInput";
-import HistoryList from "./components/SearchHistory";
 import PokemonCard from "./components/PokemonCard";
+import SearchHistory from "./components/SearchHistory";
 import ErrorMessage from "./components/ErrorMessage";
 import { Styles } from "./utils/Styles";
 
@@ -45,7 +45,7 @@ function PokScope() {
 
     setSearchHistory((prev) => {
       const updated = [searchTermLower, ...prev.filter((item) => item !== searchTermLower)];
-      return updated.slice(0, 10);
+      return updated.slice(0, 10);// here we do add the restricted search history
     });
 
     setPokemon({
@@ -89,7 +89,7 @@ function PokScope() {
         </div>
 
         <div style={Styles.spacing.section}>
-          <HistoryList 
+          <SearchHistory 
             history={searchHistory} 
             onSelect={(term) => {
               setSearchTerm(term);

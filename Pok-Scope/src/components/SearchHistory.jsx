@@ -2,7 +2,7 @@ import "./SearchHistory.css";
 import TypeColors from "../utils/typeColors";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 
- function HistoryList({ history, onSelect }) {
+ function SearchHistory({ history, onSelect }) {
   if (history.length === 0) return null;
   return (
     <div className="text-center space-y-2">
@@ -22,4 +22,4 @@ import TypeBackgrounds from "../utils/TypeBackgrounds";
   );
 }
 
-export default HistoryList;
+export default SearchHistory;
