@@ -1,10 +1,10 @@
-import Search from "./Search";
+import PoKScope from "./PokScope";
 import "./App.css";
 
 
 function App() {
   return (
-     <Search />
+     <PoKScope />
   );
 }
 

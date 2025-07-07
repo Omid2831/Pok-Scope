@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Search.css";
+import "./PokScope.css";
 import SearchInput from "./components/SearchInput";
 import HistoryList from "./components/SearchHistory";
 import PokemonCard from "./components/PokemonCard";
@@ -7,7 +7,7 @@ import ErrorMessage from "./components/ErrorMessage";
 import { Styles } from "./utils/Styles";
 
 
-function Search() {
+function PokScope() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
   const [pokemon, setPokemon] = useState({
@@ -117,4 +117,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default PokScope;
