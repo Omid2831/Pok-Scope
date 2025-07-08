@@ -16,18 +16,19 @@ const TypeBackgrounds = {
     focusRingRed: "focus:ring-red-400",
     focusRingBlue: "focus:ring-blue-400",
     focusOutlineNone: "focus:outline-none",
-    
   },
   cards: {
     white: "bg-white",
     rounded: "rounded-lg",
     shadow: "shadow",
     padding: "p-4",
-    spaceY: "space-y-4"
+    spaceY: "space-y-4",
   },
   typeBadge: "bg-blue-200 text-blue-800 px-2 py-1 rounded text-sm",
   abilityBadge: "bg-green-200 text-green-800 px-2 py-1 rounded text-sm",
-  statsBadge: "bg-pink-400 text-gray-600 px-1 py-1 rounded text-sm", // added
-  flexCenter: "flex justify-center gap-2 flex-wrap"
+  weaknessBadge: "bg-yellow-200 text-pink-800 px-2 py-1 rounded text-sm",
+  resistanceBadge: "bg-purple-200 text-black px-2 py-1 rounded text-sm",
+  statsBadge: "flex justify-center mt-4", // added
+  flexCenter: "flex justify-center gap-2 flex-wrap",
 };
 export default TypeBackgrounds;
