@@ -25,10 +25,28 @@ function PokScope() {
     localStorage.setItem("history", JSON.stringify(searchHistory));
   }, [searchHistory]);
 
+  const formatStatName = (name) => {
+    switch (name) {
+      case "hp":
+        return "HP";
+      case "attack":
+        return "Attack";
+      case "defense":
+        return "Defense";
+      case "special-attack":
+        return "Sp. Atk";
+      case "special-defense":
+        return "Sp. Def";
+      case "speed":
+        return "Speed";
+      default:
+        return name;
+    }
+  };
+
   const fetchPokemon = async (term = searchTerm) => {
     const searchTermLower = term.trim().toLowerCase();
 
-    // Reject numbers or empty strings
     if (!searchTermLower || !isNaN(searchTermLower)) {
       setPokemon({
         img: null,
@@ -59,7 +77,7 @@ function PokScope() {
           searchTermLower,
           ...prev.filter((item) => item !== searchTermLower),
         ];
-        return updated.slice(0, 10); // here we do add the restricted search history
+        return updated.slice(0, 10);
       });
 
       setPokemon({
@@ -69,7 +87,7 @@ function PokScope() {
           types: data.types.map((t) => t.type.name),
           abilities: data.abilities.map((a) => a.ability.name),
           stats: data.stats.map((stat) => ({
-            name: stat.stat.name,
+            name: formatStatName(stat.stat.name),
             value: stat.base_stat,
           })),
         },
@@ -89,6 +107,8 @@ function PokScope() {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") fetchPokemon();
   };
+
+  const stats = pokemon.data?.stats || [];
 
   return (
     <div style={Styles.layout.screenContainer}>
@@ -129,13 +149,13 @@ function PokScope() {
         {pokemon.loading && <p style={Styles.typography.loading}>Loading...</p>}
 
         {pokemon.data && (
-          <PokemonCard
-            name={pokemon.data.name}
-            img={pokemon.img}
-            types={pokemon.data.types}
-            abilities={pokemon.data.abilities}
-            Stats={pokemon.data.stats} // added
-          />
+            <PokemonCard
+              name={pokemon.data.name}
+              img={pokemon.img}
+              types={pokemon.data.types}
+              abilities={pokemon.data.abilities}
+              Stats={stats}
+            />
         )}
       </div>
     </div>
