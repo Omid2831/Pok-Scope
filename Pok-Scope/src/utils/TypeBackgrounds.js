@@ -27,6 +27,7 @@ const TypeBackgrounds = {
   },
   typeBadge: "bg-blue-200 text-blue-800 px-2 py-1 rounded text-sm",
   abilityBadge: "bg-green-200 text-green-800 px-2 py-1 rounded text-sm",
+  statsBadge: "bg-pink-400 text-gray-600 px-1 py-1 rounded text-sm", // added
   flexCenter: "flex justify-center gap-2 flex-wrap"
 };
 export default TypeBackgrounds;
