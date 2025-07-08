@@ -1,7 +1,8 @@
-import "./PokemonCard.css";
+import PokemonRadarChart from "./PokemonRadarChart";
 import TypeBackgrounds from "/src/utils/TypeBackgrounds";
 import TypeFonts from "/src/utils/TypeFonts";
 import TypeColors from "/src/utils/TypeColors";
+import "./PokemonCard.css";
 
 function PokemonCard({ name, img, types, abilities, Stats }) {
   return (
@@ -42,14 +43,11 @@ function PokemonCard({ name, img, types, abilities, Stats }) {
         <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
           Base Stats:
         </h3>
-        <div className={TypeBackgrounds.flexCenter}>
-          {/* Check if Stats is an array and not undefined before mapping */}
-          {Array.isArray(Stats) &&
-            Stats.map((stat) => (
-              <span key={stat.name} className={TypeBackgrounds.statsBadge}>
-                {stat.name}: {stat.value}
-              </span>
-            ))}
+        <div className="flex justify-center mt-4">
+          {Array.isArray(Stats) && Stats.length > 0 && (
+            <PokemonRadarChart stats={Stats}
+             />
+          )}
         </div>
       </div>
     </div>
