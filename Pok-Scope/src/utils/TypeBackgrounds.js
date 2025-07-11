@@ -18,7 +18,7 @@ const TypeBackgrounds = {
     focusOutlineNone: "focus:outline-none",
   },
   cards: {
-    white: "bg-white",
+    white: "bg-pink-100",
     rounded: "rounded-lg",
     shadow: "shadow",
     padding: "p-4",

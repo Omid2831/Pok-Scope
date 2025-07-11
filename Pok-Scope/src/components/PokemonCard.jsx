@@ -18,9 +18,12 @@ function PokemonCard({
     <div
       className={`${TypeBackgrounds.cards.white} ${TypeBackgrounds.cards.rounded} ${TypeBackgrounds.cards.shadow} ${TypeBackgrounds.cards.padding} ${TypeBackgrounds.cards.spaceY} text-center`}
     >
+      {/* Name */}
       <h2 className={`${TypeFonts.heading} ${TypeColors.text.gray800}`}>
         {name}
       </h2>
+
+      {/* Image */}
       {img && <img src={img} alt={name} className="w-32 h-32 mx-auto" />}
 
       {/* Type */}
@@ -51,17 +54,23 @@ function PokemonCard({
         </div>
       </div>
 
-      {/* Weaknesses, Resistances, Immunities */}
+      {/* Type Matchups */}
       <div>
         <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
           Type Matchups:
         </h3>
         <div className={TypeBackgrounds.flexCenter}>
+          {/* Weak To */}
           <div>
-            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>Weak To:</h4>
+            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+              Weak To:
+            </h4>
             {weaknesses.length > 0 ? (
               weaknesses.map((type) => (
-                <span key={type.name} className={TypeBackgrounds.weaknessBadge}>
+                <span
+                  key={type.name}
+                  className={TypeBackgrounds.weaknessBadge}
+                >
                   {type.name}
                 </span>
               ))
@@ -69,8 +78,12 @@ function PokemonCard({
               <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>None</span>
             )}
           </div>
+
+          {/* Resists To */}
           <div>
-            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>Resists To:</h4>
+            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+              Resists To:
+            </h4>
             {resistances.length > 0 ? (
               resistances.map((type) => (
                 <span
@@ -84,11 +97,18 @@ function PokemonCard({
               <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>None</span>
             )}
           </div>
+
+          {/* Immune To */}
           <div>
-            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>Immune To:</h4>
+            <h4 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+              Immune To:
+            </h4>
             {immunities.length > 0 ? (
               immunities.map((type) => (
-                <span key={type.name} className={TypeBackgrounds.typeBadge}>
+                <span
+                  key={type.name}
+                  className={TypeBackgrounds.typeBadge}
+                >
                   {type.name}
                 </span>
               ))
@@ -104,7 +124,7 @@ function PokemonCard({
         <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
           Base Stats:
         </h3>
-        <div className={`${TypeBackgrounds.statsBadge}`}>
+        <div className={TypeBackgrounds.statsBadge}>
           {Array.isArray(Stats) && Stats.length > 0 && (
             <PokemonRadarChart stats={Stats} pokemonName={name} />
           )}
