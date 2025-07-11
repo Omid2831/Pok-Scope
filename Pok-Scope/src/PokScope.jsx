@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./PokScope.css";
 import SearchInput from "./components/SearchInput";
 import PokemonCard from "./components/PokemonCard";
 import SearchHistory from "./components/SearchHistory";
 import ErrorMessage from "./components/ErrorMessage";
 import { Styles } from "./utils/Styles";
+import { ThemeContext } from "./context/ThemeProvider"; 
 
 function PokScope() {
+  const { theme } = useContext(ThemeContext); 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
   const [pokemon, setPokemon] = useState({
@@ -146,12 +148,15 @@ function PokScope() {
   const stats = pokemon.data?.stats || [];
 
   return (
-    <div style={Styles.layout.screenContainer}>
+    <div style={Styles.layout.screenContainer(theme)}>
       <div
-        style={{ ...Styles.layout.contentContainer, ...Styles.spacing.section }}
+        style={{
+          ...Styles.layout.contentContainer(theme),
+          ...Styles.spacing.section,
+        }}
       >
-        <h1 style={Styles.typography.heading}>Welcome to PokScope</h1>
-        <p style={Styles.typography.subheading}>
+        <h1 style={Styles.typography.heading(theme)}>Welcome to PokScope</h1>
+        <p style={Styles.typography.subheading(theme)}>
           Search for a Pokémon and see their stats, abilities, and type
           matchups.
         </p>
@@ -182,7 +187,9 @@ function PokScope() {
 
         <ErrorMessage message={pokemon.error} />
 
-        {pokemon.loading && <p style={Styles.typography.loading}>Loading...</p>}
+        {pokemon.loading && (
+          <p style={Styles.typography.loading}>Loading...</p>
+        )}
 
         {pokemon.data && (
           <PokemonCard
