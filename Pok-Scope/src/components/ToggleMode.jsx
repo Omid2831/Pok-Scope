@@ -7,6 +7,7 @@ function ToggleMode() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
+    {/* giving the button on the screen */},
     <button 
       onClick={toggleTheme}
       className={`${TypeBackgrounds.toggleModeBadge}`}

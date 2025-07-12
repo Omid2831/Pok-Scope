@@ -3,23 +3,19 @@ import { createContext, useEffect, useState } from "react";
 export const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "light";
-  });
+  // Initialize theme from localStorage or default to "light"
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
 
+  // Sync theme state to localStorage and update <html> class
   useEffect(() => {
     localStorage.setItem("theme", theme);
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
   }, [theme]);
 
-  useEffect(() => {
-  console.log("Theme changed to:", theme);
-  document.documentElement.classList.remove("light", "dark");
-  document.documentElement.classList.add(theme);
-}, [theme]);
-
-
+  // Toggle between light and dark themes
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
   };
 
   return (

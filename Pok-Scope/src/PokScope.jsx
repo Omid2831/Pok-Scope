@@ -5,10 +5,10 @@ import PokemonCard from "./components/PokemonCard";
 import SearchHistory from "./components/SearchHistory";
 import ErrorMessage from "./components/ErrorMessage";
 import { Styles } from "./utils/Styles";
-import { ThemeContext } from "./context/ThemeProvider"; 
+import { ThemeContext } from "./context/ThemeProvider";
 
 function PokScope() {
-  const { theme } = useContext(ThemeContext); 
+  const { theme } = useContext(ThemeContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
   const [pokemon, setPokemon] = useState({
@@ -18,34 +18,31 @@ function PokScope() {
     loading: false,
   });
 
+  // Load saved search history from localStorage on mount
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("history"));
     if (saved) setSearchHistory(saved);
   }, []);
 
+  // Persist search history to localStorage on update
   useEffect(() => {
     localStorage.setItem("history", JSON.stringify(searchHistory));
   }, [searchHistory]);
 
+  // Map API stat names to display-friendly names
   const formatStatName = (name) => {
     switch (name) {
-      case "hp":
-        return "HP";
-      case "attack":
-        return "Attack";
-      case "defense":
-        return "Defense";
-      case "special-attack":
-        return "Sp. Atk";
-      case "special-defense":
-        return "Sp. Def";
-      case "speed":
-        return "Speed";
-      default:
-        return name;
+      case "hp": return "HP";
+      case "attack": return "Attack";
+      case "defense": return "Defense";
+      case "special-attack": return "Sp. Atk";
+      case "special-defense": return "Sp. Def";
+      case "speed": return "Speed";
+      default: return name;
     }
   };
 
+  // Combine damage relations from multiple types and remove duplicates
   const mergeDamageRelations = (allRelations) => {
     const merged = {
       double_damage_from: [],
@@ -59,7 +56,7 @@ function PokScope() {
       }
     }
 
-    // Remove duplicates
+    // Remove duplicates by Pokémon type name
     for (const key in merged) {
       merged[key] = Array.from(
         new Map(merged[key].map((t) => [t.name, t])).values()
@@ -69,6 +66,7 @@ function PokScope() {
     return merged;
   };
 
+  // Fetch Pokémon data and associated type damage relations
   const fetchPokemon = async (term = searchTerm) => {
     const searchTermLower = term.trim().toLowerCase();
 
@@ -90,29 +88,21 @@ function PokScope() {
     });
 
     try {
-      const res = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${searchTermLower}`
-      );
-      if (!res.ok) {
-        throw new Error(`Pokémon '${searchTermLower}' not found`);
-      }
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTermLower}`);
+      if (!res.ok) throw new Error(`Pokémon '${searchTermLower}' not found`);
 
       const data = await res.json();
-      const types = data.types.map((t) => t.type.name);
 
-      const relationPromises = types.map((type) =>
-        fetch(`https://pokeapi.co/api/v2/type/${type}`).then((r) => r.json())
+      // Fetch damage relations for all Pokémon types
+      const relationPromises = data.types.map((t) =>
+        fetch(`https://pokeapi.co/api/v2/type/${t.type.name}`).then((r) => r.json())
       );
-
       const typeData = await Promise.all(relationPromises);
-      const allRelations = typeData.map((t) => t.damage_relations);
-      const mergedRelations = mergeDamageRelations(allRelations);
+      const mergedRelations = mergeDamageRelations(typeData.map((t) => t.damage_relations));
 
+      // Update search history, keep max 10 unique entries
       setSearchHistory((prev) => {
-        const updated = [
-          searchTermLower,
-          ...prev.filter((item) => item !== searchTermLower),
-        ];
+        const updated = [searchTermLower, ...prev.filter((item) => item !== searchTermLower)];
         return updated.slice(0, 10);
       });
 
@@ -120,7 +110,7 @@ function PokScope() {
         img: data.sprites.front_default,
         data: {
           name: data.name,
-          types,
+          types: data.types.map((t) => t.type.name),
           abilities: data.abilities.map((a) => a.ability.name),
           stats: data.stats.map((stat) => ({
             name: formatStatName(stat.stat.name),
@@ -141,6 +131,7 @@ function PokScope() {
     }
   };
 
+  // Trigger search on Enter key press
   const handleKeyDown = (e) => {
     if (e.key === "Enter") fetchPokemon();
   };
@@ -157,8 +148,7 @@ function PokScope() {
       >
         <h1 style={Styles.typography.heading(theme)}>Welcome to PokScope</h1>
         <p style={Styles.typography.subheading(theme)}>
-          Search for a Pokémon and see their stats, abilities, and type
-          matchups.
+          Search for a Pokémon and see their stats, abilities, and type matchups.
         </p>
 
         <div style={Styles.spacing.section}>
@@ -187,9 +177,7 @@ function PokScope() {
 
         <ErrorMessage message={pokemon.error} />
 
-        {pokemon.loading && (
-          <p style={Styles.typography.loading}>Loading...</p>
-        )}
+        {pokemon.loading && <p style={Styles.typography.loading}>Loading...</p>}
 
         {pokemon.data && (
           <PokemonCard
