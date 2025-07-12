@@ -30,6 +30,9 @@ const TypeBackgrounds = {
   resistanceBadge: "bg-purple-200 text-black px-2 py-1 rounded text-sm",
   statsBadge: "flex justify-center mt-4", // added
   toggleModeBadge: "px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 dark:text-white hover:scale-105 transition",
+  loadingBadge: "inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-pink-600",
+  loadingBar: "flex flex-col items-center justify-center mt-4 gap-2",
   flexCenter: "flex justify-center gap-2 flex-wrap",
+  errorMessage: "text-red-500 font-semibold",
 };
 export default TypeBackgrounds;
