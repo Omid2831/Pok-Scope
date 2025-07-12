@@ -16,7 +16,8 @@ function PokemonCard({
 }) {
   return (
     <div
-      className={`${TypeBackgrounds.cards.white} ${TypeBackgrounds.cards.rounded} ${TypeBackgrounds.cards.shadow} ${TypeBackgrounds.cards.padding} ${TypeBackgrounds.cards.spaceY} text-center`}
+      className={`${TypeBackgrounds.cards.white} ${TypeBackgrounds.cards.rounded}
+      ${TypeBackgrounds.cards.shadow} ${TypeBackgrounds.cards.padding} ${TypeBackgrounds.cards.spaceY} text-center`}
     >
       {/* Name */}
       <h2 className={`${TypeFonts.heading} ${TypeColors.text.gray800}`}>
@@ -66,16 +67,26 @@ function PokemonCard({
               Weak To:
             </h4>
             {weaknesses.length > 0 ? (
-              weaknesses.map((type) => (
-                <span
-                  key={type.name}
-                  className={TypeBackgrounds.weaknessBadge}
-                >
-                  {type.name}
-                </span>
-              ))
+              (() => {
+                const max = 7;
+                let displayWeaknesses = [...weaknesses];
+
+                while (displayWeaknesses.length >= max + 1) {
+                  displayWeaknesses.shift();
+                  if (displayWeaknesses.length > max) {
+                    displayWeaknesses.pop();
+                  }
+                }
+                return displayWeaknesses.map((type) => (
+                  <span key={type.name} className={TypeBackgrounds.weaknessBadge}>
+                    {type.name}
+                  </span>
+                ));
+              })()
             ) : (
-              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>None</span>
+              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+                None
+              </span>
             )}
           </div>
 
@@ -85,16 +96,26 @@ function PokemonCard({
               Resists To:
             </h4>
             {resistances.length > 0 ? (
-              resistances.map((type) => (
-                <span
-                  key={type.name}
-                  className={TypeBackgrounds.resistanceBadge}
-                >
-                  {type.name}
-                </span>
-              ))
+              (() => {
+                const max = 7;
+                let displayResistances = [...resistances];
+
+                while (displayResistances.length >= max + 1) {
+                  displayResistances.shift();
+                  if (displayResistances.length > max) {
+                    displayResistances.pop();
+                  }
+                }
+                return displayResistances.map((type) => (
+                  <span key={type.name} className={TypeBackgrounds.resistanceBadge}>
+                    {type.name}
+                  </span>
+                ));
+              })()
             ) : (
-              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>None</span>
+              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+                None
+              </span>
             )}
           </div>
 
@@ -104,16 +125,26 @@ function PokemonCard({
               Immune To:
             </h4>
             {immunities.length > 0 ? (
-              immunities.map((type) => (
-                <span
-                  key={type.name}
-                  className={TypeBackgrounds.typeBadge}
-                >
-                  {type.name}
-                </span>
-              ))
+              (() => {
+                const max = 7;
+                let displayImmunities = [...immunities];
+
+                while (displayImmunities.length >= max + 1) {
+                  displayImmunities.shift();
+                  if (displayImmunities.length > max) {
+                    displayImmunities.pop();
+                  }
+                }
+                return displayImmunities.map((type) => (
+                  <span key={type.name} className={TypeBackgrounds.typeBadge}>
+                    {type.name}
+                  </span>
+                ));
+              })()
             ) : (
-              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>None</span>
+              <span className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
+                None
+              </span>
             )}
           </div>
         </div>
