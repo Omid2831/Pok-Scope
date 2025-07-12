@@ -4,11 +4,14 @@ import SearchInput from "./components/SearchInput";
 import PokemonCard from "./components/PokemonCard";
 import SearchHistory from "./components/SearchHistory";
 import ErrorMessage from "./components/ErrorMessage";
-import { Styles } from "./utils/Styles";
 import { ThemeContext } from "./context/ThemeProvider";
+import LoadingSpinner from "./components/LoadingSpinner";
+import { Styles } from "./utils/Styles";
+import TypeBackgrounds from "./utils/TypeBackgrounds";
 
 function PokScope() {
   const { theme } = useContext(ThemeContext);
+  const [showError, setShowError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
   const [pokemon, setPokemon] = useState({
@@ -32,13 +35,20 @@ function PokScope() {
   // Map API stat names to display-friendly names
   const formatStatName = (name) => {
     switch (name) {
-      case "hp": return "HP";
-      case "attack": return "Attack";
-      case "defense": return "Defense";
-      case "special-attack": return "Sp. Atk";
-      case "special-defense": return "Sp. Def";
-      case "speed": return "Speed";
-      default: return name;
+      case "hp":
+        return "HP";
+      case "attack":
+        return "Attack";
+      case "defense":
+        return "Defense";
+      case "special-attack":
+        return "Sp. Atk";
+      case "special-defense":
+        return "Sp. Def";
+      case "speed":
+        return "Speed";
+      default:
+        return name;
     }
   };
 
@@ -87,8 +97,13 @@ function PokScope() {
       loading: true,
     });
 
+    const startTime = Date.now();
+    const minLoadingTime = 3000; // 3 seconds
+
     try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTermLower}`);
+      const res = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${searchTermLower}`
+      );
       if (!res.ok) throw new Error(`Pokémon '${searchTermLower}' not found`);
 
       const data = await res.json();
@@ -98,13 +113,24 @@ function PokScope() {
         fetch(`https://pokeapi.co/api/v2/type/${t.type.name}`).then((r) => r.json())
       );
       const typeData = await Promise.all(relationPromises);
-      const mergedRelations = mergeDamageRelations(typeData.map((t) => t.damage_relations));
+      const mergedRelations = mergeDamageRelations(
+        typeData.map((t) => t.damage_relations)
+      );
 
       // Update search history, keep max 10 unique entries
       setSearchHistory((prev) => {
-        const updated = [searchTermLower, ...prev.filter((item) => item !== searchTermLower)];
+        const updated = [
+          searchTermLower,
+          ...prev.filter((item) => item !== searchTermLower),
+        ];
         return updated.slice(0, 10);
       });
+
+      // Calculate elapsed time and wait if needed
+      const elapsed = Date.now() - startTime;
+      if (elapsed < minLoadingTime) {
+        await new Promise((resolve) => setTimeout(resolve, minLoadingTime - elapsed));
+      }
 
       setPokemon({
         img: data.sprites.front_default,
@@ -122,12 +148,21 @@ function PokScope() {
         loading: false,
       });
     } catch (err) {
+      // Ensure error loading spinner visible for 6s
+      const elapsed = Date.now() - startTime;
+      if (elapsed < minLoadingTime) {
+        await new Promise((resolve) => setTimeout(resolve, minLoadingTime - elapsed));
+      }
+
       setPokemon({
         img: null,
         data: null,
         error: err.message || "Something went wrong",
         loading: false,
       });
+
+      setShowError(true);
+      setTimeout(() => setShowError(false), 4000); // Hide error after 4 seconds
     }
   };
 
@@ -148,7 +183,8 @@ function PokScope() {
       >
         <h1 style={Styles.typography.heading(theme)}>Welcome to PokScope</h1>
         <p style={Styles.typography.subheading(theme)}>
-          Search for a Pokémon and see their stats, abilities, and type matchups.
+          Search for a Pokémon and see their stats, abilities, and type
+          matchups.
         </p>
 
         <div style={Styles.spacing.section}>
@@ -175,9 +211,16 @@ function PokScope() {
           />
         </div>
 
-        <ErrorMessage message={pokemon.error} />
-
-        {pokemon.loading && <p style={Styles.typography.loading}>Loading...</p>}
+        {pokemon.loading ? (
+          <div className={`${TypeBackgrounds.loadingBar}`}>
+            <LoadingSpinner />
+            <p className={`${TypeBackgrounds.errorMessage}`}>
+              Wait for a moment...
+            </p>
+          </div>
+        ) : (
+          showError && <ErrorMessage message={pokemon.error} />
+        )}
 
         {pokemon.data && (
           <PokemonCard
