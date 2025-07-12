@@ -110,7 +110,9 @@ function PokScope() {
 
       // Fetch damage relations for all Pokémon types
       const relationPromises = data.types.map((t) =>
-        fetch(`https://pokeapi.co/api/v2/type/${t.type.name}`).then((r) => r.json())
+        fetch(`https://pokeapi.co/api/v2/type/${t.type.name}`).then((r) =>
+          r.json()
+        )
       );
       const typeData = await Promise.all(relationPromises);
       const mergedRelations = mergeDamageRelations(
@@ -129,7 +131,9 @@ function PokScope() {
       // Calculate elapsed time and wait if needed
       const elapsed = Date.now() - startTime;
       if (elapsed < minLoadingTime) {
-        await new Promise((resolve) => setTimeout(resolve, minLoadingTime - elapsed));
+        await new Promise((resolve) =>
+          setTimeout(resolve, minLoadingTime - elapsed)
+        );
       }
 
       setPokemon({
@@ -151,7 +155,9 @@ function PokScope() {
       // Ensure error loading spinner visible for 6s
       const elapsed = Date.now() - startTime;
       if (elapsed < minLoadingTime) {
-        await new Promise((resolve) => setTimeout(resolve, minLoadingTime - elapsed));
+        await new Promise((resolve) =>
+          setTimeout(resolve, minLoadingTime - elapsed)
+        );
       }
 
       setPokemon({
@@ -211,6 +217,11 @@ function PokScope() {
           />
         </div>
 
+        {/* Error message - only shows when there's an error and not loading */}
+        {!pokemon.loading && pokemon.error && (
+          <ErrorMessage message={pokemon.error} />
+        )}
+
         {pokemon.loading ? (
           <div className={`${TypeBackgrounds.loadingBar}`}>
             <LoadingSpinner />
@@ -219,7 +230,9 @@ function PokScope() {
             </p>
           </div>
         ) : (
-          showError && <ErrorMessage message={pokemon.error} />
+          showError && pokemon.loading && pokemon.error && (
+          <ErrorMessage message={pokemon.error} />
+        )
         )}
 
         {pokemon.data && (
