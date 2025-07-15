@@ -1,6 +1,7 @@
 import "./SearchInput.css";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 import TypeColors from "../utils/typeColors";
+import LoadingSpinner from "./LoadingSpinner";
 
 {
   /**
@@ -22,6 +23,7 @@ function SearchInput({
   onSearchClick,
   onClearClick,
   hasError,
+  isSearching,
 }) {
   return (
     <div className="flex items-center space-x-2">
@@ -46,10 +48,15 @@ function SearchInput({
       />
       {/* Search button with blue background and white text */}
       <button
-        className={`px-4 py-2 ${TypeBackgrounds.bgs.blue} ${TypeColors.white} rounded ${TypeBackgrounds.bgs.HbgBlue} transition`}
+        className={`px-4 py-2 ${TypeBackgrounds.bgs.pink} ${TypeColors.black} rounded ${TypeBackgrounds.bgs.HbgPink} ${TypeBackgrounds.searchButton}`}
         onClick={onSearchClick}
+        disabled={isSearching} 
       >
-        Search
+        {isSearching ? (
+          <LoadingSpinner/>
+        ):(
+          "Search"
+        )}
       </button>
       {/* Clear button appears only if there is some input */}
       {searchTerm && (
