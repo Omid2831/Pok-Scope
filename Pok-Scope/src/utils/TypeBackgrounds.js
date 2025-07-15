@@ -36,5 +36,6 @@ const TypeBackgrounds = {
   loadingBar: "flex flex-col items-center justify-center mt-4 gap-2",
   flexCenter: "flex justify-center gap-2 flex-wrap",
   errorMessage: "text-red-500 font-semibold",
+  searchButton: "transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed",
 };
 export default TypeBackgrounds;
