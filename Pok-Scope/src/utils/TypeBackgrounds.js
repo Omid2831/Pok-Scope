@@ -3,9 +3,11 @@ const TypeBackgrounds = {
     gray: "bg-gray-200",
     gray300: "bg-gray-300",
     blue: "bg-blue-600",
+    pink: "bg-pink-500",  
     HbgGray: "hover:bg-gray-300",
     HbgGray400: "hover:bg-gray-400",
     HbgBlue: "hover:bg-blue-700",
+     HbgPink: "hover:bg-pink-600",
   },
   borders: {
     borderRed: "border-red-500",
