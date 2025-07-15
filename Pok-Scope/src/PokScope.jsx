@@ -5,15 +5,14 @@ import PokemonCard from "./components/PokemonCard";
 import SearchHistory from "./components/SearchHistory";
 import ErrorMessage from "./components/ErrorMessage";
 import { ThemeContext } from "./context/ThemeProvider";
-import LoadingSpinner from "./components/LoadingSpinner";
 import { Styles } from "./utils/Styles";
-import TypeBackgrounds from "./utils/TypeBackgrounds";
 
 function PokScope() {
   const { theme } = useContext(ThemeContext);
   const [showError, setShowError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [pokemon, setPokemon] = useState({
     img: null,
     data: null,
@@ -90,6 +89,7 @@ function PokScope() {
       return;
     }
 
+    setIsSearching(true);
     setPokemon({
       img: null,
       data: null,
@@ -98,7 +98,7 @@ function PokScope() {
     });
 
     const startTime = Date.now();
-    const minLoadingTime = 3000; // 3 seconds
+    const minLoadingTime = 3000;
 
     try {
       const res = await fetch(
@@ -152,7 +152,6 @@ function PokScope() {
         loading: false,
       });
     } catch (err) {
-      // Ensure error loading spinner visible for 6s
       const elapsed = Date.now() - startTime;
       if (elapsed < minLoadingTime) {
         await new Promise((resolve) =>
@@ -168,11 +167,12 @@ function PokScope() {
       });
 
       setShowError(true);
-      setTimeout(() => setShowError(false), 4000); // Hide error after 4 seconds
+      setTimeout(() => setShowError(false), 4000);
+    } finally {
+      setIsSearching(false);
     }
   };
 
-  // Trigger search on Enter key press
   const handleKeyDown = (e) => {
     if (e.key === "Enter") fetchPokemon();
   };
@@ -204,6 +204,7 @@ function PokScope() {
               setPokemon({ img: null, data: null, error: "", loading: false });
             }}
             hasError={!!pokemon.error}
+            isSearching={isSearching}
           />
         </div>
 
@@ -217,22 +218,8 @@ function PokScope() {
           />
         </div>
 
-        {/* Error message - only shows when there's an error and not loading */}
         {!pokemon.loading && pokemon.error && (
           <ErrorMessage message={pokemon.error} />
-        )}
-
-        {pokemon.loading ? (
-          <div className={`${TypeBackgrounds.loadingBar}`}>
-            <LoadingSpinner />
-            <p className={`${TypeBackgrounds.errorMessage}`}>
-              Wait for a moment...
-            </p>
-          </div>
-        ) : (
-          showError && pokemon.loading && pokemon.error && (
-          <ErrorMessage message={pokemon.error} />
-        )
         )}
 
         {pokemon.data && (
@@ -243,9 +230,15 @@ function PokScope() {
             abilities={pokemon.data.abilities}
             Stats={stats}
             damageRelations={pokemon.data.damageRelations}
-            weaknesses={pokemon.data.damageRelations?.double_damage_from || []}
-            resistances={pokemon.data.damageRelations?.half_damage_from || []}
-            immunities={pokemon.data.damageRelations?.no_damage_from || []}
+            weaknesses={
+              pokemon.data.damageRelations?.double_damage_from.slice(0, 8) || []
+            }
+            resistances={
+              pokemon.data.damageRelations?.half_damage_from.slice(0, 8) || []
+            }
+            immunities={
+              pokemon.data.damageRelations?.no_damage_from.slice(0, 8) || []
+            }
           />
         )}
       </div>
