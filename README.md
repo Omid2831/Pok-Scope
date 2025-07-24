@@ -47,7 +47,7 @@ Contributions are welcome! If you'd like to improve PokéScope, please follow th
 For major changes, please [open an issue](https://github.com/omidm/Pok-Scope/issues) first to discuss what you would like to change.
 
 ## 👥 Team
-**Lead Programmer:** [omidm](https://github.com/omidm)
+**Lead Programmer:** [omidm](https://github.com/omid2831)
 
 ## 📄 License
 
