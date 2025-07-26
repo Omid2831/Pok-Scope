@@ -10,14 +10,14 @@ import {
 
 /**
  * PokemonRadarChart component renders a radar chart visualization of Pokémon stats.
- * 
+ *
  * @param {Array} stats - Array of stat objects with shape [{ name: string, value: number }]
  * Each object represents a Pokémon stat (e.g., HP, Attack, Defense).
- * 
+ *
  * Example of a single stat: { name: "HP", value: 80 }
  */
 const PokemonRadarChart = ({ stats }) => {
-  
+
   // Early return if stats data is missing or empty to prevent rendering errors
   if (!stats || stats.length === 0) return null;
 
@@ -32,13 +32,13 @@ const PokemonRadarChart = ({ stats }) => {
     >
       {/* Background grid of concentric circles and spokes */}
       <PolarGrid />
-      
+
       {/* Labels for each axis (stat name) positioned around the radar chart */}
       <PolarAngleAxis dataKey="name" />
-      
+
       {/* Radial axis that shows the scale, domain limits the min and max values */}
       <PolarRadiusAxis angle={30} domain={[0, 150]} />
-      
+
       {/* The radar shape representing the stat values */}
       <Radar
         name="Base Stats"
@@ -48,7 +48,7 @@ const PokemonRadarChart = ({ stats }) => {
         fillOpacity={0.6}       // Transparency of the radar fill
         isAnimationActive={false} // Disable animation for better performance or consistency
       />
-      
+
       {/* Tooltip shows details when hovering over chart areas */}
       <Tooltip />
     </RadarChart>

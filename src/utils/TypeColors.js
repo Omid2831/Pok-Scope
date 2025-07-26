@@ -12,5 +12,3 @@ const TypeColors = {
   black: "text-black",
 };
 export default TypeColors;
-
-

@@ -4,10 +4,10 @@ import TypeBackgrounds from "../utils/TypeBackgrounds";
 
 /**
  * SearchHistory component renders a list of recent search terms as clickable buttons.
- * 
+ *
  * @param {Array} history - Array of strings representing previous search terms.
  * @param {Function} onSelect - Callback function triggered when a search term is clicked.
- * 
+ *
  * Renders nothing if the history array is empty.
  */
 function SearchHistory({ history, onSelect }) {

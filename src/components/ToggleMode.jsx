@@ -8,7 +8,7 @@ function ToggleMode() {
 
   return (
     {/* giving the button on the screen */},
-    <button 
+    <button
       onClick={toggleTheme}
       className={`${TypeBackgrounds.toggleModeBadge}`}
     >
