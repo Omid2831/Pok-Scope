@@ -4,5 +4,5 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/Pok-scope/', // Set the base path for deployment
+  base: '/fetch-data/', // Set the base path for deployment
 })
