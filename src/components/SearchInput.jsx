@@ -50,7 +50,7 @@ function SearchInput({
       <button
         className={`px-4 py-2 ${TypeBackgrounds.bgs.pink} ${TypeColors.white} rounded ${TypeBackgrounds.bgs.HbgPink} ${TypeBackgrounds.searchButton}`}
         onClick={onSearchClick}
-        disabled={isSearching} 
+        disabled={isSearching}
       >
         {isSearching ? (
           <LoadingSpinner/>
