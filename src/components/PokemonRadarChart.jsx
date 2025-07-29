@@ -24,7 +24,7 @@ const PokemonRadarChart = ({ stats }) => {
   return (
     <RadarChart
       cx={150}             // x-coordinate of the chart's center
-      cy={150}             // y-coordinate of the chart's center
+      cy={140}             // y-coordinate of the chart's center
       outerRadius={100}    // radius of the outermost circle of the radar chart
       width={300}          // width of the SVG container
       height={300}         // height of the SVG container

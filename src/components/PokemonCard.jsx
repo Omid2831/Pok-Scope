@@ -19,41 +19,46 @@ function PokemonCard({
       className={`${TypeBackgrounds.cards.white} ${TypeBackgrounds.cards.rounded}
       ${TypeBackgrounds.cards.shadow} ${TypeBackgrounds.cards.padding} ${TypeBackgrounds.cards.spaceY} text-center`}
     >
-      {/* Name */}
+       {/* Name */}
       <h2 className={`${TypeFonts.heading} ${TypeColors.text.gray800}`}>
         {name}
       </h2>
 
-      {/* Image */}
-      {img && <img src={img} alt={name} className="w-32 h-32 mx-auto" />}
+      {/* Grid: Image first on mobile, center on desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+        {/* Type */}
+        <div className="order-2 sm:order-1">
+          <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>Type:</h3>
+          <div className={TypeBackgrounds.flexCenter}>
+            {types.map((type) => (
+              <span key={type} className={TypeBackgrounds.typeBadge}>
+                {type}
+              </span>
+            ))}
+          </div>
+        </div>
 
-      {/* Type */}
-      <div>
-        <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
-          Type:
-        </h3>
-        <div className={TypeBackgrounds.flexCenter}>
-          {types.map((type) => (
-            <span key={type} className={TypeBackgrounds.typeBadge}>
-              {type}
-            </span>
-          ))}
+        {/* Image */}
+        {img && (
+          <div className="order-1 sm:order-2">
+            <img src={img} alt={name} className="w-32 h-32 mx-auto my-2 sm:my-0" />
+          </div>
+        )}
+
+        {/* Abilities */}
+        <div className="order-3 sm:order-3">
+          <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>Abilities:</h3>
+          <div className={TypeBackgrounds.flexCenter}>
+            {abilities.map((ability) => (
+              <span key={ability} className={TypeBackgrounds.abilityBadge}>
+                {ability}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Abilities */}
-      <div>
-        <h3 className={`${TypeFonts.subheading} ${TypeColors.text.gray700}`}>
-          Abilities:
-        </h3>
-        <div className={TypeBackgrounds.flexCenter}>
-          {abilities.map((ability) => (
-            <span key={ability} className={TypeBackgrounds.abilityBadge}>
-              {ability}
-            </span>
-          ))}
-        </div>
-      </div>
+      <div className="flex justify-center flex-col items-center mt-4">
 
       {/* Type Matchups */}
       <div>
@@ -160,6 +165,7 @@ function PokemonCard({
             <PokemonRadarChart stats={Stats} pokemonName={name} />
           )}
         </div>
+      </div>
       </div>
     </div>
   );

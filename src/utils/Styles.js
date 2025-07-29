@@ -10,8 +10,8 @@ export const Styles = {
       transition: "background-color 0.3s, color 0.3s",
     }),
     contentContainer: (theme) => ({
-      width: "100%",
-      maxWidth: "30rem",
+      width: "312.5%",
+      maxWidth: "60rem",
       borderRadius: "1rem",
       backdropFilter: theme === "dark" ? "blur(10px)" : "none",
       backgroundColor:
