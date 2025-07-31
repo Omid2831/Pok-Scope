@@ -37,5 +37,13 @@ const TypeBackgrounds = {
   flexCenter: "flex justify-center gap-2 flex-wrap",
   errorMessage: "text-red-500 font-semibold",
   searchButton: "transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed",
+   hoverActions: {
+    container: "flex gap-2",
+    favoriteBtn: "transition transform hover:scale-110",
+    favoriteActive: "text-red-800",
+    favoriteInactive: "text-gray-400",
+    menuBtn: "text-gray-600 hover:scale-110 transition",
+    iconLarge: "text-3xl",
+  },
 };
 export default TypeBackgrounds;
