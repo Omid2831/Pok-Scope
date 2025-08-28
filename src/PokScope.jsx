@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import "./PokScope.css";
 import SearchInput from "./components/SearchInput";
 import PokemonCard from "./components/PokemonCard";
 import SearchHistory from "./components/SearchHistory";

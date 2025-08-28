@@ -1,4 +1,3 @@
-import "./SearchHistory.css";
 import TypeColors from "../utils/typeColors";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 

@@ -3,7 +3,7 @@ import TypeBackgrounds from "/src/utils/TypeBackgrounds";
 import TypeFonts from "/src/utils/TypeFonts";
 import TypeColors from "/src/utils/TypeColors";
 import HoverActions from "./HoverActions";
-import "./PokemonCard.css";
+
 
 function PokemonCard({
   name,

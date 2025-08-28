@@ -1,4 +1,3 @@
-import "./ErrorMessage.css";
 import TypeColors from "/src/utils/TypeColors.js";
 import TypeFonts from "/src/utils/TypeFonts.js";
 

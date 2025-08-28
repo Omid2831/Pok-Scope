@@ -1,5 +1,5 @@
 import TypeBackgrounds from "../utils/TypeBackgrounds";
-import "./LoadingSpinner.css";
+
 
 function LoadingSpinner() {
   return (

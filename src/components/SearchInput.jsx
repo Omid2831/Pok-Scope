@@ -1,4 +1,3 @@
-import "./SearchInput.css";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 import TypeColors from "../utils/typeColors";
 import LoadingSpinner from "./LoadingSpinner";
