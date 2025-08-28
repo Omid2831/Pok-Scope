@@ -1,5 +1,4 @@
 import PokScope from "./PokScope";
-import "./App.css";
 import ThemeProvider from "./context/ThemeProvider";
 import ToggleMode from "./components/ToggleMode";
 
