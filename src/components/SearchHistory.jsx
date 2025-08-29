@@ -1,4 +1,4 @@
-import TypeColors from "../utils/typeColors";
+import TypeColors from "../utils/TypeColors";
 import TypeBackgrounds from "../utils/TypeBackgrounds";
 
 /**
