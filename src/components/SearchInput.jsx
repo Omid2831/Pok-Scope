@@ -1,5 +1,5 @@
 import TypeBackgrounds from "../utils/TypeBackgrounds";
-import TypeColors from "../utils/typeColors";
+import TypeColors from "../utils/TypeColors";
 import LoadingSpinner from "./LoadingSpinner";
 
 {
